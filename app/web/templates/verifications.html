@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% block c %}<h1>📸 Verification logs</h1><div class="row">{% for r in ('', 'pass','fail','review','unavailable') %}<a class="b {{'g' if r!=flt}}" href="?r={{r}}">{{r or 'all'}}</a>{% endfor %}</div><br>
+{% for v in rows %}<div class="card"><div class="row"><b>{{v.user_id}}</b><span class="tag">{{v.method}}</span><span class="tag">{{v.result}}</span><span class="m">{{'%.0f'|format(v.confidence*100)}}% · {{v.created_at.strftime('%Y-%m-%d %H:%M')}}</span></div>
+<p class="m">{{v.reasons}}</p>{% if v.screenshot_file_id %}<a href="/admin/shot/{{v.id}}" target="_blank"><img class="shot" src="/admin/shot/{{v.id}}" loading="lazy"></a>{% endif %}
+{% if v.result in ('review','unavailable','fail') %}<div class="row">{% for d,l in (('approve','✅ Approve'),('reject','❌ Reject')) %}<form class="inline" method="post" action="/admin/verifications/{{v.id}}/{{d}}"><input type="hidden" name="csrf" value="{{csrf}}"><button class="b {{'g' if d=='reject'}}">{{l}}</button></form>{% endfor %}</div>{% endif %}</div>
+{% else %}<p class="m">Nothing here.</p>{% endfor %}{% endblock %}

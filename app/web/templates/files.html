@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block c %}<h1>📁 Files</h1><div class="row"><form class="row"><input name="q" value="{{q}}" placeholder="Search name" style="width:220px"><button class="g">Search</button></form>
+{% if admin.role != 'moderator' %}<a class="b" href="/admin/files/new">+ New file</a>{% endif %}</div><br>
+<div class="card"><table><tr><th>Name</th><th>Category</th><th>Files</th><th>⬇</th><th>Status</th><th></th></tr>
+{% for f in files %}<tr><td><b>{{f.name}}</b> <span class="m">{{f.version}}</span></td><td>{{f.category.name if f.category else '—'}}</td><td>{{f.assets|length}}</td><td>{{f.download_count}}</td>
+<td><span class="tag">{{'published' if f.published else 'draft'}}</span></td><td>{% if admin.role != 'moderator' %}<div class="row">
+<a class="b g" href="/admin/files/{{f.id}}/edit">Edit</a>
+<form class="inline" method="post" action="/admin/files/{{f.id}}/toggle"><input type="hidden" name="csrf" value="{{csrf}}"><button class="g b">{{'Unpublish' if f.published else 'Publish'}}</button></form>
+<form class="inline" method="post" action="/admin/files/{{f.id}}/delete" onsubmit="return confirm('Delete this file?')"><input type="hidden" name="csrf" value="{{csrf}}"><button class="b d">Delete</button></form></div>{% endif %}</td></tr>
+{% else %}<tr><td colspan="6" class="m">No files yet.</td></tr>{% endfor %}</table></div>{% endblock %}

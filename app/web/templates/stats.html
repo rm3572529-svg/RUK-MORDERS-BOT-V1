@@ -1,0 +1,3 @@
+{% extends "base.html" %}{% block c %}<h1>📈 Download statistics</h1><div class="card"><h3>Last 14 days</h3><table>{% for d,n in series %}<tr><td style="width:100px">{{d[5:]}}</td><td><div class="bar" style="width:{{(n/mx*100)|int}}%;min-width:2px"></div></td><td style="width:50px">{{n}}</td></tr>{% endfor %}</table></div>
+<div class="card"><h3>Top files</h3><table>{% for n,v,c in top %}<tr><td>{{n}} {{v}}</td><td>{{c}}</td></tr>{% endfor %}</table></div>
+<div class="card"><h3>Users by language</h3><table>{% for l,c in langs %}<tr><td>{{l or 'not chosen'}}</td><td>{{c}}</td></tr>{% endfor %}</table></div>{% endblock %}

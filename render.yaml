@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: rmg-telegram-bot
+    runtime: docker
+    plan: starter          # free plans sleep; a polling bot needs an always-on instance
+    healthCheckPath: /healthz
+    envVars:
+      - {key: BOT_TOKEN, sync: false}
+      - {key: ADMIN_ID, sync: false}
+      - {key: SECRET_KEY, generateValue: true}
+      - {key: ADMIN_PANEL_PASSWORD, sync: false}
+      - {key: AI_API_KEY, sync: false}
+      - {key: PUBLIC_BASE_URL, sync: false}
+      - key: DATABASE_URL
+        fromDatabase: {name: rmg-db, property: connectionString}
+databases:
+  - name: rmg-db
+    plan: basic-256mb

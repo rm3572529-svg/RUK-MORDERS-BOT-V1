@@ -1,0 +1,3 @@
+{% extends "base.html" %}{% block c %}<h1>🌍 Languages</h1><form class="card" method="post"><input type="hidden" name="csrf" value="{{csrf}}">
+<p class="m">Untranslated screens fall back to English. “Menu” = menu/navigation fully translated.</p>
+{% for c,n in langs.items() %}<label class="c"><input type="checkbox" name="lang" value="{{c}}" {{'checked' if (not enabled[0]) or c in enabled}}> {{n}} <span class="tag">{{'menu' if c in translated else 'English UI'}}</span></label>{% endfor %}<br><button class="b">Save</button></form>{% endblock %}

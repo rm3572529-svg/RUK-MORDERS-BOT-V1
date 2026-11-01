@@ -1,0 +1,6 @@
+{% extends "base.html" %}{% block c %}<h1>📢 Broadcast</h1>
+<form class="card" method="post" action="/admin/broadcast/send" enctype="multipart/form-data"><input type="hidden" name="csrf" value="{{csrf}}">
+<label>Message (Telegram HTML allowed: &lt;b&gt;, &lt;i&gt;, &lt;a href&gt;)</label><textarea name="text" rows="5"></textarea>
+<label>Image or mp4 video (optional)</label><input type="file" name="media" accept="image/*,video/mp4">
+<label>Buttons, one per line: <code>Label | https://link</code></label><textarea name="buttons" rows="3"></textarea><br><button class="b" onclick="return confirm('Send to all users?')">Send to all users</button></form>
+<div class="card"><table><tr><th>When</th><th>Message</th><th>Status</th><th>Sent/Failed</th></tr>{% for b in rows %}<tr><td>{{b.created_at.strftime('%m-%d %H:%M')}}</td><td>{{b.text[:80]}}</td><td>{{b.status}}</td><td>{{b.sent}}/{{b.failed}}</td></tr>{% endfor %}</table></div>{% endblock %}

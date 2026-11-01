@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% block c %}<h1>👥 Users</h1><form class="row"><input name="q" value="{{q}}" placeholder="ID, @username or name" style="width:240px"><button class="g b">Search</button></form><br>
+<div class="card"><table><tr><th>User</th><th>Lang</th><th>⬇</th><th>Verification</th><th>Joined</th><th></th></tr>
+{% for u in users %}<tr><td><b>{{u.first_name}}</b> {{'@'+u.username if u.username}}<br><span class="m">{{u.id}}</span></td><td>{{u.language or '—'}}</td><td>{{u.total_downloads}}</td>
+<td><span class="tag">{{u.verification_status}}</span> {{'🚫 banned' if u.banned}}</td><td>{{u.joined_at.strftime('%Y-%m-%d')}}</td><td>{% if admin.role != 'moderator' %}<div class="row">
+{% for act,lbl in (('unban','Unban') if u.banned else ('ban','Ban'), ('unverify','Unverify') if u.verification_status!='none' else ('verify','Verify')) %}
+<form class="inline" method="post" action="/admin/users/{{u.id}}/{{act}}"><input type="hidden" name="csrf" value="{{csrf}}"><button class="b g">{{lbl}}</button></form>{% endfor %}</div>{% endif %}</td></tr>{% endfor %}</table>
+<div class="row">{% if p>0 %}<a class="b g" href="?q={{q}}&p={{p-1}}">◀</a>{% endif %}{% if users|length==50 %}<a class="b g" href="?q={{q}}&p={{p+1}}">▶</a>{% endif %}</div></div>{% endblock %}

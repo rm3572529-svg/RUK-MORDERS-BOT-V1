@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block c %}<h1>📂 Categories</h1>
+<form class="card row" method="post" action="/admin/categories/add"><input type="hidden" name="csrf" value="{{csrf}}">
+<input name="emoji" placeholder="📁" style="width:70px"><input name="name" placeholder="New category name" required style="flex:1;min-width:160px">
+<select name="parent_id" style="width:200px"><option value="">Top level</option>{% for c in cats %}<option value="{{c.id}}">Sub of {{c.name}}</option>{% endfor %}</select>
+<input name="sort" type="number" value="0" style="width:80px"><button class="b">Add</button></form>
+{% macro rowf(c) %}<form class="row" method="post" action="/admin/categories/{{c.id}}/save" style="margin:6px 0"><input type="hidden" name="csrf" value="{{csrf}}">
+<input name="emoji" value="{{c.emoji}}" style="width:70px"><input name="name" value="{{c.name}}" style="flex:1;min-width:140px"><input name="sort" type="number" value="{{c.sort}}" style="width:80px">
+<button class="b g">Save</button><button class="b d" formaction="/admin/categories/{{c.id}}/delete" onclick="return confirm('Delete category and subcategories? Files become uncategorised.')">Delete</button></form>{% endmacro %}
+{% for c in cats %}<div class="card">{{rowf(c)}}<div style="margin-left:24px">{% for s in c.children %}{{rowf(s)}}{% endfor %}</div></div>{% endfor %}{% endblock %}

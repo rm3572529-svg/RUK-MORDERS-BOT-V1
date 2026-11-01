@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% block c %}<h1>⚙️ Bot settings</h1><form class="card" method="post"><input type="hidden" name="csrf" value="{{csrf}}">
+<label class="c"><input type="checkbox" name="verification_required" {{'checked' if v.verification_required=='1'}}> Require YouTube verification for restricted files</label>
+<label class="c"><input type="checkbox" name="api_required" {{'checked' if v.api_required=='1'}} {{'' if oauth else 'disabled'}}> Require API-confirmed (Google sign-in) verification — screenshots alone won't unlock downloads</label>
+{% if not oauth %}<p class="m">API verification needs GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET and YOUTUBE_CHANNEL_ID.</p>{% endif %}
+<p class="m">YouTube: {{s.youtube_url}}<br>WhatsApp: {{s.whatsapp_url}}</p><button class="b">Save</button></form>{% endblock %}

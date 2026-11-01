@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% block c %}<h1>🤖 AI settings</h1><form class="card" method="post" action="/admin/ai/save"><input type="hidden" name="csrf" value="{{csrf}}">
+<p>API key: <b>{{'✅ configured (env AI_API_KEY)' if key_set else '❌ not set — set AI_API_KEY in your environment'}}</b></p>
+<label>Provider (openai | anthropic)</label><input name="ai_provider" value="{{o.ai_provider or s.ai_provider}}">
+<label>Base URL (OpenAI-compatible)</label><input name="ai_base_url" value="{{o.ai_base_url or s.ai_base_url}}">
+<label>Model</label><input name="ai_model" value="{{o.ai_model or s.ai_model}}"><label>Vision model</label><input name="ai_vision_model" value="{{o.ai_vision_model or s.ai_vision_model}}"><br><button class="b">Save</button></form>
+<form class="card" method="post"><input type="hidden" name="csrf" value="{{csrf}}"><h3>Tools</h3><label>File notes</label><textarea name="notes" rows="3"></textarea><br>
+<div class="row"><button class="b g" formaction="/admin/ai/test">Test connection</button><button class="b g" formaction="/admin/ai/describe">Generate description</button><button class="b g" formaction="/admin/ai/suggest">Suggest category</button></div>
+{% if result %}<p><b>Result:</b> {{result}}</p>{% endif %}</form>{% endblock %}

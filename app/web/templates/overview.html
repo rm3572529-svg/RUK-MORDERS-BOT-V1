@@ -1,0 +1,4 @@
+{% extends "base.html" %}{% block c %}<h1>📊 Overview</h1><div class="grid">
+<div class="card stat"><b>{{d.users}}</b>Users</div><div class="card stat"><b>{{d.published}}/{{d.files}}</b>Published files</div>
+<div class="card stat"><b>{{d.downloads}}</b>Downloads</div><div class="card stat"><b>{{d.downloads24}}</b>Last 24h</div>
+<div class="card stat"><b>{{d.verified}}</b>Verified users</div><div class="card stat"><b>{{d.pending}}</b><a href="/admin/verifications?r=review" style="color:inherit">Pending reviews</a></div></div>{% endblock %}
